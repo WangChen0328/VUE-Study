@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一个重要的内置关系</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+<!--
+    1.一个重要的内置关系：VueComponent.prototype._proto === Vue.prototype
+    2.为么要有这个关系：让组件实例对象（vc）可以访问到 【Vue原型】上的属性、方法
+-->    
+<div id="root">
+    <school></school>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+
+    const school = Vue.extend({
+        template: `
+            <div>
+                <h2>{{name}}</h2>
+                <button @click="show">点我显示vue中x属性</button>
+            </div>
+        `,
+        data() {
+            return {
+                name: '你好'
+            }
+        },
+        methods: {
+            show() {
+                console.log(this.x)
+            }
+        }
+    })
+
+    const vm = new Vue({
+        el: '#root',
+        components: {
+            school
+        }
+    })
+
+    vm.__proto__.x = 99
+
+    // function Demo() {
+    //     this.a = 1;//普通属性
+    //     this.b = 2;
+    // }
+
+    // const d = new Demo();
+
+    // console.log(Demo.prototype) //显示原型
+    // console.log(d.__proto__) //隐示原型，都指向同一个原型对象
+
+    // console.log(Demo.prototype === d.__proto__)
+
+    // Demo.prototype.x = 99;//原型属性
+
+    // console.log("@", d);
+
+</script>
+</body>
+</html>

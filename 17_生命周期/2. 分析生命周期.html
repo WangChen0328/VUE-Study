@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分析生命周期</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+<!--
+    
+    -->
+<div id="root">
+    <h2>当前n的值为：{{n}}</h2>
+    <button @click="add" v-full-bind:value="n">点我+1</button>
+    <button @click="bye">点我销毁vm</button>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+
+    Vue.directive('full-bind', {
+        bind() {
+            console.log('full-bind bind');
+        },
+        inserted() {
+            console.log('full-bind inserted');
+        },
+        update() {
+            console.log('full-bind update');
+        }
+    })
+
+    const vm = new Vue({
+        el: '#root',
+        //template:
+        //    `<div>
+        //        <h2>当前n的值为：{{n}}</h2>
+        //        <button @click="add" v-full-bind:value="n">点我+1</button>
+        //    </div>`,
+        data: {
+            n: 1
+        },
+        methods: {
+            add() {
+                this.n ++;
+            },
+            bye() {
+                this.$destroy();
+            }
+        },
+        beforeCreate() {
+            console.log('beforeCreate');
+            //console.log(this);
+            //debugger;
+        },
+        created() {
+            //该环境_data已经有数据了
+            console.log('created');
+            //console.log(this);
+            //debugger;
+        },
+        beforeMount() {
+            console.log('beforeMount');
+            //console.log(this);
+            //debugger;
+        },
+        //bind和inserted方法在beforeMount之后，mounted之前
+        // bind() {
+        //     console.log('bind');
+        // },
+        // inserted() {
+        //     console.log('inserted');
+        // },
+        mounted() {
+            console.log('mounted');
+            //debugger;
+        },
+        beforeUpdate() {
+            console.log('beforeUpdate');
+            //debugger;
+        },
+        //update方法在beforeUpdate之后，updated之前
+        // update() {
+        //     console.log('full-bind update');
+        // }
+        updated() {
+            console.log('updated');
+        },
+        beforeDestroy() {
+            console.log('beforeDestroy');
+            //不再触发之前的update方法, _data值变，页面不变
+            debugger
+        },
+        destroyed() {
+            console.log('destroyed');
+        },
+    })
+
+</script>
+</body>
+</html>

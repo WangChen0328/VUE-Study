@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表过滤</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+<!--
+    V-for指令
+        1. 用于展示列表数据
+        2. 语法：v-for="(item，index) in xxx" :key="yyy"
+        3. 可遍历：数组、对象、字符串（用的很少）、指定次数（用的很少）
+    -->
+<div id="root">
+    <ul>
+        <!-- 遍历数组 -->
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="value">
+        <li v-for="(person, index) in filPersons" :key="person.id">
+            {{person.name}} - {{person.age}} - {{person.gender}}
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            persons: [
+                {id: '001', name: '马冬梅', age: '18', gender: '女'},
+                {id: '002', name: '周冬雨', age: '19', gender: '女'},
+                {id: '003', name: '周杰伦', age: '20', gender: '男'},
+                {id: '004', name: '温兆伦', age: '21', gender: '男'}
+            ],
+            personsFilter: [],
+            value: ''
+        },
+        methods: {
+            show(name) {
+                if(this.value) {
+                    return name.indexOf(this.value) != -1;
+                } else {
+                    return true;
+                }
+            }
+        },
+        computed: {
+            //计算属性，初始化时调用一次，所依赖的属性发生变化时，调用this.value。
+            //返回的是filPersons属性内容，不更改原persons。
+            filPersons() {
+                return this.persons.filter((person => {
+                    return person.name.indexOf(this.value) != -1;
+                }));
+            }
+        },
+        watch: {
+            value: {
+                immediate: true,
+                handler(val) {
+                    this.personsFilter = this.persons.filter((person => {
+                        return person.name.indexOf(this.value) != -1;
+                    }));
+                }
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

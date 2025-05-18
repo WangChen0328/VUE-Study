@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.set()的使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+<!--
+    -->
+<div id="root">
+    <h2>学校名称：{{name}}</h2>
+    <h2>学校地址：{{address}}</h2>
+    <hr/>
+    <h2>学生姓名：{{student.name}}</h2>
+    <h2>学生年龄：真实{{student.age.rAge}}，对外{{student.age.sAge}}</h2>
+    <h2 v-if="student.gender">学生性别：{{student.gender}}</h2>
+    <button @click="dynamicSet">渲染后增加数据劫持</button>
+    <h2>朋友们</h2>
+    <ul>
+        <li v-for="friend in student.friends" :key="friend.id">
+            {{friend.name}} - {{friend.age}}
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '尚硅谷',
+            address: '北京',
+            student: {
+                name: 'tom',
+                age: {
+                    rAge: 40,
+                    sAge: 29
+                },
+                friends: [
+                    {id: '001', name: 'jerry', age: 35},
+                    {id: '002', name: 'tony', age: 36}
+                ]
+            }
+        },
+        methods: {
+            dynamicSet() {
+                //后绑定对象属性，只能绑定在已经声明的对象上student，但是不能直接使用根对象_data
+                //this.$set(this.student, 'gender', '男');
+                Vue.set(this.student, 'gender', '男')
+            }
+        },
+        computed: {
+        
+        },
+        watch: {
+        
+        }
+    })
+</script>
+</body>
+</html>

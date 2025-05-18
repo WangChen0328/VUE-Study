@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回顾object.defineProperty方法</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+
+        -->
+    <div id="root">
+    </div>
+<script type="text/javascript">
+    let number = 18;
+
+    let person = {
+        name: '张三',
+        sex: '男'
+    }
+
+    Object.defineProperty(person, 'age', {
+        //value: 18,
+        //enumerable: true, //控制属性是否可以进行枚举，默认值是false
+        //writable: true, //控制属性是否可以被修改，默认值是false
+        //configurable: true, //控制属性是否可以被删除，默认是false
+
+        //当有人读取person的age属性时，get函数（getter）就会被调用，且返回值就是age的值
+        get() {
+            console.log('有人获得属性了');
+            return number;
+        },
+        //当有人修改person的age属性时，set函数（setter）就会被调用，且返回值就是age的值
+        set(value) {
+            console.log('有人修改属性了');
+            number = value;
+        }
+    })
+
+    console.log(person)
+</script>
+</body>
+</html>

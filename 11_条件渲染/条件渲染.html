@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+<!--
+    条件煊染：
+        1.v-if
+            写法：
+                (1).V-if="表达式"
+                (2).v-else-if="表达式
+                (3).v-else="表达式"
+            适用于：切换频率较低的场景
+            特点：不展示的DOM元素直接被移除
+            注意：V-if可以和：v-else-if、V-else一起使用，但要求结构不能被“打断“。
+        2.v-show
+            写法：V-show="表达式"
+            适用：切换频率较高的场录
+            特点：不展示的DOM元素未被移除，仅仅是使用样式隐藏掉
+        3.备注：使用v-if的时，元素可能无法获取到，而使用v-show一定可以获取到。
+    -->
+<div id="root">
+    <h2>当前的n值时：{{n}}</h2>
+    <button @click="n++">加加</button>
+
+    <!-- 中间不允许被打断 -->
+<!--    <div v-if="n === 1">one</div>-->
+<!--    <div v-else-if="n === 2">two</div>-->
+<!--    <div v-else-if="n === 3">three</div>-->
+<!--    <div v-else>four</div>-->
+
+    <!-- template和v-if的配合使用 -->
+    <template v-if="n === 1">
+        <div>one</div>
+        <div>two</div>
+        <div>three</div>
+    </template>
+
+
+    <!-- 使用v-show做条件渲染, 频发变换 优先使用 -->
+    <h2 v-show="show">欢迎来到{{name}}1</h2>
+
+    <!-- 使用v-if做条件渲染 -->
+    <h2 v-if="show">欢迎来到{{name}}2</h2>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '尚硅谷',
+            show: false,
+            n: 0
+        },
+        methods: {
+        
+        },
+        computed: {
+        
+        },
+        watch: {
+        
+        }
+    })
+
+</script>
+</body>
+</html>

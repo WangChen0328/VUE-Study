@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue监测数据改变的原理</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+<!--
+    reactive 响应式原理
+    解析模板 -> 生成虚拟dom -> diff算法比对 -> 更新页面
+    -->
+<div id="root">
+    <h2>学校名称：{{name}}</h2>
+    <h2>学校地址：{{address}}</h2>
+</div>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '尚硅谷',
+            address: '北京'
+        },
+        methods: {
+        
+        },
+        computed: {
+        
+        },
+        watch: {
+        
+        }
+    })
+</script>
+</body>
+</html>
